@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <title>React For Everyone</title>
+
+    <style>
+        /* == General style === */
+        * {
+          box-sizing: border-box;
+          padding: 0;
+          margin: 0;
+        }
+  
+        html,
+        body {
+          height: 100%;
+          line-height: 1.5;
+          font-family: 'Montserrat';
+          font-weight: 300;
+          color: black;
+        }
+  
+        .root {
+          min-height: 100%;
+          position: relative;
+        }
+  
+        .header-wrapper,
+        .main-wrapper,
+        .footer-wrapper,
+        .section-wrapper {
+          width: 85%;
+          margin: auto;
+        }
+  
+        .header-wrapper,
+        .main-wrapper,
+        .section-wrapper {
+          padding: 10px;
+          margin: 2px auto;
+        }
+  
+        .section-wrapper {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+        }
+
+        h1 {
+          font-size: 70px;
+          font-weight: 300;
+        }
+  
+        h2,
+        h3 {
+          font-weight: 300;
+        }
+  
+        header {
+          background-color: #61dbfb;
+          padding: 25;
+          padding: 10px;
+        }
+  
+        main {
+          padding: 10px;
+          padding-bottom: 10px;
+          /* Height of the footer */
+        }
+  
+        ul {
+          margin-left: 15px;
+        }
+  
+        ul li {
+          list-style: none;
+        }
+  
+        footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 60px;
+          /* Height of the footer */
+          background: #6cf;
+        }
+  
+        .footer-wrapper {
+          font-weight: 400;
+          text-align: center;
+          line-height: 60px;
+        }
+      </style>
+</head>
+
+<body>
+    <div class="root"></div>
+
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const rootElement = document.querySelector('.root')
+
+
+        const Header = ({title, subtitle, author, date}) => (
+            <header>
+                <div className="header-wrapper">
+                    <h1>{title}</h1>
+                    <h2>{subtitle}</h2>
+                    <h3>{author.firstName} {author.lastName}</h3>
+                    <p>{date}</p>
+                </div>
+            </header>
+        )
+
+
+        const TechList = ({techs}) => {
+              const techsFormatted = techs.map(tech => (
+              <li key={tech}>{tech}</li>
+              ))
+              return techsFormatted
+            }
+
+
+        const Main = ({techs}) => (
+              <main>
+                  <div className="main-wrapper">
+                      <p>Prerequisite to get started react.js:</p>
+                      <ul>
+                          <TechList techs={techs} />
+                      </ul>
+                  </div>
+              </main>
+        )
+
+        const Section = ({list, skillsList, countryList}) => (
+              <section>
+                <div className="section-wrapper">
+                  <div>
+                    <p>Numbers List</p> 
+                    {list}
+                  </div>
+                  <div>
+                    <p>Technologies List</p> 
+                    {skillsList}
+                  </div>
+                  <div>
+                    <p>Countries List</p> 
+                    {countryList}
+                  </div>
+                </div>
+              </section>
+        )
+
+
+        const Footer = ({copyRight}) => (
+            <footer>
+                <div className='footer-wrapper'>
+                    <p>{copyRight}</p>
+                </div>
+            </footer>
+          )
+
+        const App = () => {
+
+        const title = 'Getting Started React'
+        const subtitle = 'JavaScript Library'
+        const author = {
+          firstName: 'Clement',
+          lastName: 'Tagoe'
+        }
+        const date = 'Feb 10, 2020'
+        const copyRight = 'Copyright 2021'
+        const techs = ['HTML', 'CSS', 'JavaScript']
+
+        const numbers = [1,2,3,4,5]
+        const skills = [['HTML', 10], ['CSS', 7], ['JavaScript', 9], ['React', 8]]
+        const countries = [{name: 'Finland', city: 'Helsinki'}, {name: 'Sweden', city: 'Stockholm'}, {name: 'Denmark', city: 'Copenhagen'}, {name: 'Norway', city: 'Oslo'}]
+        
+        const list = numbers.map( (num) => <p key={num}>{num}</p>)
+        
+        const countryList = countries.map(({name, city}) => <div><p>{name} {city}</p></div>)
+        
+        const skillsList = skills.map(([tech, level]) => <p key={tech}>{tech} {' '} {level}</p>)
+
+        return (
+              <div className='app'>
+                  <Header  
+                    title={title}
+                    subtitle={subtitle}
+                    author={author}
+                    date={date}
+                  />
+                  <Main techs={techs}/>
+                  <Section
+                  list={list}
+                  skillsList={skillsList}
+                  countryList={countryList}
+                  />
+                  <Footer copyRight={copyRight} />
+              </div>
+            )
+        }
+
+        ReactDOM.render(<App />, rootElement)
+    </script>
+</body>
+
+</html>
